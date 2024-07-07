@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-scroll";
-import { SiCoffeescript } from "react-icons/si";
 import Button from "../layouts/Button";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
@@ -13,7 +12,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleNavLinkClick = () => {
-    if (location.pathname === "/login" || location.pathname === "/register") {
+    if (location.pathname === "/login" || location.pathname === "/register"|| location.pathname === "/quiz") {
       navigate("/");
     }
   };
