@@ -4,8 +4,6 @@ import "../styles/Register.css";
 import {
   IoCloseOutline,
   IoPersonOutline,
-  IoCalendarOutline,
-  IoCallOutline,
   IoMailOutline,
   IoLockClosedOutline,
 } from "react-icons/io5";
@@ -25,22 +23,27 @@ export default function Register() {
   const RegisterUser =async(e)=>{
       e.preventDefault()
       const {name , email , password} = data;
-      try{
-          const {data} = await axios.post('/register',{
-            name ,email, password
-          })
-          if(data.error){
-            toast.error(data.error)
-          }
-          else{
-            setData({})
-            //toast.success('Login successful. Welcome!');
-            navigate('/');
-          }
-      }catch(error)
-      {
-          console.log(error)
-      }
+      try {
+      await axios.post("http://localhost:8000/",{
+        name, email,password
+      })
+      .then(res=>{
+        if(res.data=="exist"){
+          //navigate("/welcomePage",{state:{id:email}})
+          alert("User exist!")
+          
+        }
+        else if(res.data=="notexist"){
+          navigate("/login")
+        }
+      })
+      .catch(e=>{
+        alert("wrong")
+        console.log(e)
+      })
+    } catch (e) {
+      console.log(e)
+    }
   }
       
   return (
@@ -80,7 +83,7 @@ export default function Register() {
                 <input type="checkbox" />I agree to the terms & Conditions
               </label>
             </div>
-            <button type="submit">Register</button>
+            <button type="submit"onClick={(RegisterUser)}>Register</button>
             <div className="login-link">
               <p>
                 Already have an account?

@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import TestPage from "./pages/TestPage"
 import axios from "axios";
 import {Toaster} from "react-hot-toast";
+import WelcomePage from "./pages/WelcomePage";
 axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.withCredentials = true
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
             <Route element={<Login />} path="/login" />
             <Route element={<Register />} path="/register" />
             <Route element={<TestPage />} path="/quiz" /> 
+            <Route element={<WelcomePage />} path="/welcomePage" /> 
           </Routes>
         </main>
         <Footer />

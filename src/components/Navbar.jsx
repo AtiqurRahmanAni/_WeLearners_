@@ -12,7 +12,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleNavLinkClick = () => {
-    if (location.pathname === "/login" || location.pathname === "/register"|| location.pathname === "/quiz") {
+    if (location.pathname === "/login" || location.pathname === "/register"|| location.pathname === "/welcome") {
       navigate("/");
     }
   };

@@ -7,9 +7,10 @@ import {
   IoLockClosedOutline,
 } from "react-icons/io5";
 import "../styles/Login.css";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 export default function Login() {
+  const navigate=useNavigate();
   const [data,setData]=useState(
     {
       name: '',
@@ -17,9 +18,28 @@ export default function Login() {
       password: '',
     }
   )
-  const loginUser = (e)=>{
-    e.preventDefault()
-    axios.get('/')
+  async function loginUser (e){
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:8000/",{
+        name, email,password
+      })
+      .then(res=>{
+        if(res.data=="exist"){
+          navigate("/welcomePage",{state:{id:email}})
+        }
+        else if(res.data=="notexist"){
+          alert("User have not register yet!")
+        }
+      })
+      .catch(e=>{
+        alert("wrong")
+        console.log(e)
+      })
+    } catch (e) {
+      console.log(e)
+    }
+    // axios.get('/')
   }
   return (
     <div className=" min-h-screen flex flex-col justify-center lg:px-32 px-5 bg-backgroundColor">
@@ -60,10 +80,10 @@ export default function Login() {
               </label>
               <a href="#">Forgot Password</a>
             </div>
-            <button type="submit">Login</button>
+            <button type="submit"onClick={(loginUser)}>Login</button>
             <div className="register-link">
               <p>
-                Don&apos;t have an account?
+                Don't have an account?
                 <Link to="/register">Register</Link>
               </p>
             </div>
