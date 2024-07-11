@@ -1,34 +1,35 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import TestPage from "./pages/TestPage"
-import axios from "axios";
-import {Toaster} from "react-hot-toast";
+import TestPage from "./pages/TestPage";
+import EnrollNow from "./pages/EnrollNow";
 import WelcomePage from "./pages/WelcomePage";
-axios.defaults.baseURL = 'http://localhost:8000';
-axios.defaults.withCredentials = true
+import MenuCard from "./layouts/MenuCard";
+import LearnMore from "./LearnMore/LearnMore";
 const App = () => {
   return (
-    <BrowserRouter>
+    <Router>
       <div>
         <Navbar />
-        <Toaster position ='bottom-right' toastOptions={{duration: 2000}}/>
         <main>
           <Routes>
             <Route element={<HomePage />} path="/" />
             <Route element={<Login />} path="/login" />
             <Route element={<Register />} path="/register" />
-            <Route element={<TestPage />} path="/quiz" /> 
+            <Route element={<TestPage />} path="/quiz" />
+            <Route path="/MenuCard" element={<MenuCard />} />
+            <Route element={<EnrollNow />} path="/enroll-now" />
             <Route element={<WelcomePage />} path="/welcomePage" /> 
+            <Route element={<LearnMore />} path="/learn-more" />
           </Routes>
         </main>
         <Footer />
       </div>
-    </BrowserRouter>
+    </Router>
   );
 };
 

@@ -1,8 +1,14 @@
 import React from "react";
 import img from "../assets/img/about.jpeg";
 import Button from "../layouts/Button";
+import { useNavigate } from "react-router";
 
+
+  
 const About = () => {
+  const navigate = useNavigate(); // Get the navigate function from react-router
+
+ 
   return (
     <div className=" min-h-screen flex flex-col items-center justify-center lg:px-32 px-5 bg-backgroundColor">
       <h1 className=" font-semibold text-center text-4xl lg:mt-14 mt-24 mb-8">About Us</h1>
@@ -26,7 +32,7 @@ const About = () => {
           email can join this website.It is open for everyone.
           </p>
 
-          <Button title="Learn More" />
+          <Button title="Learn More" onClick={() => navigate("/learn-more")} />
         </div>
       </div>
     </div>
