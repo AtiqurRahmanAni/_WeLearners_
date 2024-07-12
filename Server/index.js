@@ -1,67 +1,37 @@
-const express = require('express')
-const dotenv = require('dotenv').config()
-const cors = require('cors');
-const {mongoose} = require('mongoose')
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import authRoute from './routes/authoRoute.js'
 
 
-
-//database connection
-
-mongoose.connect(process.env.MONGO_URL).
-then(()=> console.log('Database Connected'))
-.catch((err)=>console.log('Database not connected',err))
-//middleware
+// Middleware
+dotenv.config()
 const app = express();
+const corsOptions=
+{
+    origin:true
+
+}
 app.use(cors());
+app.use(express.json());
+app.use(cookieParser())
+app.use(cors(corsOptions));
 
-app.use(express.json())
+app.use('/auth', authRoute);
+app.get('/', authRoute)
 
-app.use('/', require('./routes/authoRoute'))
-app.get('/',cors(),(req,res)=>{
+// Database connection
+ mongoose.connect(process.env.MONGO_URL)
+  .then(() => console.log('Database is Connected'))
+  .catch((err) => console.log('Database not connected', err));
+  
+// Server setup
+const port = process.env.PORT || 8000;
 
-})
-
-app.post('/',async(req,res)=>{
-    const{email,password}=req.body
-
-    try {
-        const check= await UserModel.findOne({email:email})
-        if(check){
-            res.json("exist")
-        }
-        else
-        {
-            res.json("not exist")
-        }
-    } catch (e) {
-        res.json("not exist")
-    }
-})
-app.post('/register',async(req,res)=>{
-    const{email,password}=req.body
-
-    const data={
-        email:email,
-        password: password
-    }
-
-    try {
-        const check= await UserModel.findOne({email:email})
-        if(check){
-            res.json("exist")
-        }
-        else
-        {
-            res.json("notexist")
-            await UserModel.insertMany({data})
-        }
-    } catch (e) {
-        res.json("notexist")
-    }
-})
-
-const port = 8000;
-app.listen(port, ()=>
-    console.log('server is running on port '+{port})
-)
- 
+app.listen(port, () =>
+  
+  console.log(Server is running on port ${port}),
+  // connectDB(),
+);

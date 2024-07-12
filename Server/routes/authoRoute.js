@@ -1,19 +1,24 @@
- const express = require('express');
- const router = express.Router();
- const cors = require('cors');
- const {test , registerUser , loginUser} = require("../controller/authoController");
- 
+import express from 'express';
+import cors from 'cors';
+import {authoController} from '../controller/authoController.js'; 
+import mongoose from 'mongoose';
 
- //middleware
-    router.use(
-        cors({
-            credentials : true,
-            origin : "http://localhost:5173"
-        })
-    )
+const router = express.Router();
 
-router.get('/', test)
-router.get('/user', loginUser)
-router.post('/register', registerUser);
+// Middleware
+router.use(
+  cors({
+    credentials: true,
+    origin: 'http://localhost:5173',
+  })
+)
 
-module.exports = router
+
+router.get('/', authoController.test); 
+router.get('/', cors(), (req, res) => {
+  
+  res.send('Hello from route');
+});
+router.post('/login', authoController.loginUser); 
+router.post('/register', authoController.registerUser); 
+export default router;
