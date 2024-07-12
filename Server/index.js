@@ -22,23 +22,11 @@ app.use(cors(corsOptions));
 
 app.use('/auth', authRoute);
 app.get('/', authRoute)
-//database
-// mongoose.set('strictQuery',false)
-//   const connectDB = async()=>{
-//       try {
-//          await mongoose.connect(process.env.MONGO_URL,{
-//             useNewUrlParser:true,
-//             useUnifiedTopology: true
-//           })
-//           console.log('Monogdb is connected')
-//       } catch (error) {
-//           console.log("Mongodb is not connected");
-//       }
-//   }
+
 // Database connection
-// mongoose.connect(process.env.MONGO_URL)
-//   .then(() => console.log('Database is Connected'))
-//   .catch((err) => console.log('Database not connected', err));
+ mongoose.connect(process.env.MONGO_URL)
+  .then(() => console.log('Database is Connected'))
+  .catch((err) => console.log('Database not connected', err));
   
 // Server setup
 const port = process.env.PORT || 8000;
