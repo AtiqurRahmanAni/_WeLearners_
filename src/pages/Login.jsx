@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   IoCloseOutline,
   IoPersonOutline,
@@ -6,14 +7,45 @@ import {
   IoLockClosedOutline,
 } from "react-icons/io5";
 import "../styles/Login.css";
-import { Link } from "react-router-dom";
-
-const Login = () => {
+import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+export default function Login() {
+  const navigate=useNavigate();
+  const [data,setData]=useState(
+    {
+      name: '',
+      email: '',
+      password: '',
+    }
+  )
+  async function loginUser (e){
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:8000/",{
+        name, email,password
+      })
+      .then(res=>{
+        if(res.data=="exist"){
+          navigate("/welcomePage",{state:{id:email}})
+        }
+        else if(res.data=="notexist"){
+          alert("User have not register yet!")
+        }
+      })
+      .catch(e=>{
+        alert("wrong")
+        console.log(e)
+      })
+    } catch (e) {
+      console.log(e)
+    }
+    // axios.get('/')
+  }
   return (
     <div className=" min-h-screen flex flex-col justify-center lg:px-32 px-5 bg-backgroundColor">
       <div className="wrapper">
         <div className="login-box" id="login-box">
-          <form action="">
+          <form onSubmit={loginUser}>
             <h2>LogIn</h2>
             <span className="icon-close" id="login-close">
               <IoCloseOutline />
@@ -23,21 +55,22 @@ const Login = () => {
               <span className="icon">
                 <IoPersonOutline />
               </span>
-              <input type="fullname" required />
+              
+              <input type="text"  value={data.name} onChange={(e) => setData({...data, name: e.target.value})} required/>
               <label>UserName</label>
             </div>
             <div className="input-box">
               <span className="icon">
                 <IoMailOutline />
               </span>
-              <input type="email" required />
+              <input type="email" value={data.email} onChange={(e) => setData({...data, email: e.target.value})}  required />
               <label>Email</label>
             </div>
             <div className="input-box">
               <span className="icon">
                 <IoLockClosedOutline />
               </span>
-              <input type="password" required />
+              <input type="password" value={data.password} onChange={(e) => setData({...data, password: e.target.value})}  required />
               <label>Password</label>
             </div>
             <div className="remember-forgot">
@@ -47,10 +80,10 @@ const Login = () => {
               </label>
               <a href="#">Forgot Password</a>
             </div>
-            <button type="submit">Login</button>
+            <button type="submit"onClick={(loginUser)}>Login</button>
             <div className="register-link">
               <p>
-                Don&apos;t have an account?
+                Don't have an account?
                 <Link to="/register">Register</Link>
               </p>
             </div>
@@ -59,6 +92,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
-export default Login;
+
