@@ -10,6 +10,8 @@ import EnrollNow from "./pages/EnrollNow";
 import WelcomePage from "./pages/WelcomePage";
 import MenuCard from "./layouts/MenuCard";
 import LearnMore from "./LearnMore/LearnMore";
+import Quiz from "./pages/Quiz";
+
 const App = () => {
   return (
     <Router>
@@ -21,6 +23,7 @@ const App = () => {
             <Route element={<Login />} path="/login" />
             <Route element={<Register />} path="/register" />
             <Route element={<TestPage />} path="/quiz" />
+            <Route element={<Quiz />} path="/quiz/start" />
             <Route path="/MenuCard" element={<MenuCard />} />
             <Route element={<EnrollNow />} path="/enroll-now" />
             <Route element={<WelcomePage />} path="/welcomePage" /> 
