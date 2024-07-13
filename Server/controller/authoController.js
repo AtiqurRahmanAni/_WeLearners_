@@ -6,7 +6,7 @@ const test = (req,res)=>{
     res.json('This is test APi')
 }
 //login user
-async function loginUser(req,res){
+export const loginUser= async(req,res)=>{
     const{name,email,password}=req.body
 
     try {
@@ -24,6 +24,7 @@ async function loginUser(req,res){
 }
 }
 
+
 // register user 
 export const registerUser = async(req, res)=>{
     const{name,email,password}=req.body
@@ -37,16 +38,19 @@ export const registerUser = async(req, res)=>{
             return res.status(400).json({message:"User already exist"})
         }
         // if user doesn't exist
+        console.log(password);
     const hashedPassword= await bcrypt.hash(password,10);
     newUser = new User({
         name,
         email,
         password:hashedPassword
     });
+
     await newUser.save()
     res.status(200).json({success:true, message:'User successfully Register'})
     } catch (e) {
         res.status(500).json({success:false, message:'Register error'})
+        console.log(e);
     }
 
 }
@@ -55,4 +59,3 @@ export default {
     registerUser,
     loginUser,
   };
-
