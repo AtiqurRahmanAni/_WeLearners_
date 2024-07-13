@@ -4,7 +4,7 @@ import Image1 from "../assets/img/pic1.png";
 import Image2 from "../assets/img/pic2.png";
 import Image3 from "../assets/img/pic3.png";
 import Button from "../layouts/Button";
-import '../styles/LearnMore.css';  // Import the CSS file
+import '../styles/LearnMore.css';  
 
 const LearnMore = () => {
   const navigate = useNavigate();
